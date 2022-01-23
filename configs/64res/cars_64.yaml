@@ -1,0 +1,18 @@
+data:
+  path: /workspace/media/dataset2/carla/*.png
+  fid_file: /workspace/media/dataset2/carla/carla_128.npz
+  random_crop: False
+model:
+  bounding_box_generator_kwargs:
+    scale_range_min: [0.2, 0.16, 0.16]
+    scale_range_max: [0.25, 0.2, 0.2]
+    translation_range_min: [-0.22, -0.12, 0.]
+    translation_range_max: [0.22, 0.12, 0.]
+  generator_kwargs:
+    # range_u: [0.41667, 0.5]
+    # range_v: [0.41667, 0.5]
+    fov: 10
+training:
+  out_dir:  out/cars64
+  # range_u: [0.0, 1.0]
+  # range_v: [0.0, 0.5]       # 오케이 랜덤도 잘 들어가고 있군.. 

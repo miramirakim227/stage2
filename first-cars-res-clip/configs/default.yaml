@@ -1,0 +1,59 @@
+method: giraffe
+data:
+  dataset_name: images
+  path: /root/dataset2/ShapeNet/chairs_train/chairs_2.0_train
+  classes: []
+  img_size: 128
+  fid_file: data/carla/fid_files/carla_128.npz
+  random_crop: False
+  celebA_center_crop: False
+  use_tanh_range: False
+model:
+  z_dim: 256
+  z_dim_bg: 128
+  decoder: simple
+  discriminator: dc
+  generator: simple
+  background_generator: simple
+  bounding_box_generator: simple
+  neural_renderer: simple
+  decoder_kwargs: {}
+  discriminator_kwargs: {}
+  generator_kwargs: {}
+  bounding_box_generator_kwargs: {}     # 
+  neural_renderer_kwargs: {}
+  background_generator_kwargs:
+    hidden_size: 64
+    n_blocks: 4
+    downscale_p_by: 12
+    skips: []
+training:
+  out_dir: out/res128-clip-res50
+  batch_size: 16
+  print_every: 10
+  checkpoint_every: 3000
+  visualize_every: 500
+  validate_every: 50000
+  backup_every: 1000000
+  learning_rate: 0.0001  # 1e-4
+  learning_rate_d: 0.00001  # 2se-5
+  model_selection_metric: fid_score
+  model_selection_mode: minimize
+  n_workers: 8
+  logfile: train.log
+  overwrite_visualization: False
+  multi_gpu: false
+  optimizer: RMSprop
+  optimizer_kwargs: {}
+  n_eval_images: 10000
+  range_u: [0.0, 1.0]
+  range_v: [0.0, 0.5]       # 오케이 랜덤도 잘 들어가고 있군.. 
+  recon_weight:  100.
+  cam_weight: 0.001
+test:
+  model_file: model_best.pt
+  n_images: 20000
+  take_generator_average: True
+rendering:
+  render_dir: rendering
+  render_program: ['object_translation_vertical', 'object_translation_horizontal', 'object_rotation', 'interpolate_app', 'interpolate_shape', 'interpolate_app_bg']
